@@ -4,4 +4,4 @@
 
 ### Download dependencies
 
-> npm intall
+> npm install
