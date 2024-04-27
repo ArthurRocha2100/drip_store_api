@@ -1,5 +1,6 @@
 const { DataTypes } = require('sequelize');
 const database = require('../config/database');
+const Category = require('./categoryModel');
 const Product = database.sequelize.define(
   'Product',
   {
@@ -18,8 +19,15 @@ const Product = database.sequelize.define(
     gender: {
       type: DataTypes.STRING,
     },
-    category: {
-      type: DataTypes.STRING,
+    categoryId: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      references: {
+        tableName: "categories",
+        key: "id",
+      },
+      onUpdate: "CASCADE",
+      onDelete: "SET NULL",
     },
     brand: {
       type: DataTypes.STRING,
@@ -54,5 +62,14 @@ const Product = database.sequelize.define(
     tableName: 'products',
   }
 );
+
+Category.hasMany(Product, {
+  foreignKey: 'categoryId',
+  sourceKey: 'id', 
+});
+Product.belongsTo(Category, {
+  foreignKey: 'categoryId',
+  targetKey: 'id',
+});
 
 module.exports = Product;

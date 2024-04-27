@@ -32,13 +32,13 @@ async function createCategory(req, res) {
   } catch (error) {
     return res
       .status(httpStatus.BAD_REQUEST)
-      .json({ error: message.error })
+      .json({ error: error.message })
   }
 }
 
 async function updateCategory(req, res) {
   const categoryId = req.params.id;
-  const categoryNewName = req.body.category;
+  const categoryNewName = req.body.name;
   try {
     const updatedCategory = await Category.update(
       { category: categoryNewName },
